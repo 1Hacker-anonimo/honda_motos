@@ -113,6 +113,28 @@ textarea {
     resize: vertical;
 }
 
+/* Toolbar tools */
+.toolbar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+
+.btn-tool {
+    padding: 3px 10px;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-tool:hover {
+    background: #e0e0e0;
+}
+
 .btn {
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
