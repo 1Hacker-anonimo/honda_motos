@@ -5,6 +5,15 @@ function getData() {
     return siteData;
 }
 
+// Helper to fix image paths
+function fixImagePath(path) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('/') || path.startsWith('data:')) {
+        return path;
+    }
+    return 'images/' + path;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Show loading state if needed (optional)
 
@@ -46,12 +55,15 @@ function renderMotorcycles(motos) {
     motos.sort((a, b) => a.order - b.order).forEach(moto => {
         const card = document.createElement('div');
         card.className = 'moto-card';
+
+        const imgPath = fixImagePath(moto.mainImage);
+
         card.innerHTML = `
             <div class="moto-info">
                 <h3>${moto.name}</h3>
                 <p class="category">${moto.category}</p>
             </div>
-            <img src="${moto.mainImage}" alt="${moto.name}" class="moto-image">
+            <img src="${imgPath}" alt="${moto.name}" class="moto-image">
             <div class="card-actions-standard">
                 <button class="btn btn-primary w-100" onclick="showDetails(${moto.id})">
                     Detalhes da moto
@@ -69,19 +81,19 @@ function renderMotorcycles(motos) {
 }
 
 window.showConsortiumById = (id) => {
-    const moto = getData().motorcycles.find(m => m.id === id);
+    const moto = getData().motorcycles.find(m => m.id == id);
     if (moto) showConsortium(moto);
 };
 
 window.showFinancingById = (id) => {
-    const moto = getData().motorcycles.find(m => m.id === id);
+    const moto = getData().motorcycles.find(m => m.id == id);
     if (moto) showFinancing(moto);
 };
 
-function showDetails(id) {
+window.showDetails = function (id) {
     const data = getData();
     const motos = data.motorcycles.sort((a, b) => a.order - b.order);
-    const motoIndex = motos.findIndex(m => m.id === id);
+    const motoIndex = motos.findIndex(m => m.id == id);
     const moto = motos[motoIndex];
     if (!moto) return;
 
@@ -116,7 +128,7 @@ function showDetails(id) {
     }
 
     // Main Image
-    document.getElementById('modal-main-img').src = moto.mainImage;
+    document.getElementById('modal-main-img').src = fixImagePath(moto.mainImage);
 
     // Gallery
     const thumbnails = document.getElementById('modal-thumbnails');
@@ -124,15 +136,15 @@ function showDetails(id) {
 
     // Add main image to gallery
     const mainThumb = document.createElement('img');
-    mainThumb.src = moto.mainImage;
-    mainThumb.onclick = () => updateMainImg(moto.mainImage, mainThumb);
+    mainThumb.src = fixImagePath(moto.mainImage);
+    mainThumb.onclick = () => updateMainImg(fixImagePath(moto.mainImage), mainThumb);
     mainThumb.className = 'active';
     thumbnails.appendChild(mainThumb);
 
     moto.gallery.forEach(imgUrl => {
         const thumb = document.createElement('img');
-        thumb.src = imgUrl;
-        thumb.onclick = () => updateMainImg(imgUrl, thumb);
+        thumb.src = fixImagePath(imgUrl);
+        thumb.onclick = () => updateMainImg(fixImagePath(imgUrl), thumb);
         thumbnails.appendChild(thumb);
     });
 
@@ -184,7 +196,7 @@ function showConsortium(moto) {
     document.getElementById('cons-moto-name').textContent = moto.name;
 
     // Image and Credit
-    document.getElementById('cons-moto-img').src = moto.mainImage;
+    document.getElementById('cons-moto-img').src = fixImagePath(moto.mainImage);
     document.getElementById('cons-credit').textContent = moto.consortiumCredit || moto.price;
     document.getElementById('cons-info-text').textContent = moto.consortiumText || "*Os valores podem ser ajustados conforme tabela do consórcio.";
 
