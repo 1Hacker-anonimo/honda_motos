@@ -5,30 +5,6 @@
 const supabase = supabaseConfig;
 let currentMotoId = null;
 
-// Helper to insert bold markers
-window.insertBold = function (id) {
-    const textarea = document.getElementById(id);
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const text = textarea.value;
-
-    // Get before and after
-    const before = text.substring(0, start);
-    const after = text.substring(end, text.length);
-    const selected = text.substring(start, end);
-
-    // If no selection, just insert **** and put cursor between
-    if (start === end) {
-        textarea.value = before + "****" + after;
-        textarea.focus();
-        textarea.setSelectionRange(start + 2, start + 2);
-    } else {
-        textarea.value = before + "**" + selected + "**" + after;
-        textarea.focus();
-        textarea.setSelectionRange(start + 2, start + 2 + selected.length);
-    }
-};
-
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // 1. Check Auth
