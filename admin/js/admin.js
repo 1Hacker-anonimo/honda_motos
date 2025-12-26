@@ -2,7 +2,7 @@
  * SUPABASE ADMIN JS
  */
 
-const supabase = supabaseConfig;
+const supabase = window.supabase;
 let currentMotoId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
