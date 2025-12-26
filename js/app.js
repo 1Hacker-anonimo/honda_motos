@@ -65,13 +65,13 @@ function renderMotorcycles(motos) {
             </div>
             <img src="${imgPath}" alt="${moto.name}" class="moto-image">
             <div class="card-actions-standard">
-                <button class="btn btn-primary w-100" onclick="showDetails(${moto.id})">
+                <button class="btn btn-primary w-100" onclick="showDetails('${moto.id}')">
                     Detalhes da moto
                 </button>
-                <button class="btn btn-light-gray w-100" onclick="showConsortiumById(${moto.id})">
+                <button class="btn btn-light-gray w-100" onclick="showConsortiumById('${moto.id}')">
                     Planos de consórcio
                 </button>
-                <button class="btn btn-light-gray w-100" onclick="showFinancingById(${moto.id})">
+                <button class="btn btn-light-gray w-100" onclick="showFinancingById('${moto.id}')">
                     Financiamento
                 </button>
             </div>
