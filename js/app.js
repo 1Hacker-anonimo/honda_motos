@@ -109,7 +109,8 @@ window.showDetails = function (id) {
     // Description Formatting (Bold Titles)
     // Assuming description has sections separated by periods or already has strong tags
     // Here we wrap content to ensure bold headings look like the print
-    document.getElementById('modal-desc').innerHTML = moto.description;
+    // Higher-level formatting for description
+    document.getElementById('modal-desc').innerHTML = parseMarkdown(moto.description || "Descrição em breve...");
 
     // Specs Formatting (Key: Value)
     const specsContainer = document.getElementById('modal-specs');
@@ -133,7 +134,7 @@ window.showDetails = function (id) {
             } else {
                 const item = document.createElement('div');
                 item.className = 'spec-item';
-                item.textContent = trimmedLine;
+                item.innerHTML = parseMarkdown(trimmedLine);
                 specsContainer.appendChild(item);
             }
         });
