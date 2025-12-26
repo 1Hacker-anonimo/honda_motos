@@ -427,27 +427,26 @@ header.scrolled {
 }
 
 .modal-actions-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 1.5rem 1.8rem 2.5rem;
+}
+
+@media (min-width: 500px) {
+    .modal-actions-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .btn-consortium-main,
-.btn-financing-main {
-    background: #cc0000;
-    color: white;
-    justify-content: center;
-    padding: 1.1rem;
-    font-size: 1.1rem;
-}
-
+.btn-financing-main,
 .btn-whatsapp-main {
-    background: #25D366;
-    color: white;
     justify-content: center;
-    padding: 1.1rem;
-    font-size: 1.1rem;
+    padding: 0.9rem 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 8px; /* Slightly more squared like the print */
+    height: 100%;
 }
 
 .btn-consortium-main:hover,
@@ -483,20 +482,20 @@ header.scrolled {
 }
 
 .specs-section h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
     color: #333;
 }
 
 #modal-specs {
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 0.85rem;
+    line-height: 1.6;
     color: #444;
 }
 
 #modal-specs .spec-item {
-    margin-bottom: 0.3rem;
+    margin-bottom: 3px;
 }
 
 #modal-specs b {

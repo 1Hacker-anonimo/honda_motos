@@ -109,19 +109,25 @@ window.showDetails = function (id) {
     const specsContainer = document.getElementById('modal-specs');
     specsContainer.innerHTML = '';
     if (moto.specs) {
-        const specLines = moto.specs.split(';');
+        // Split by both semicolon and newline to be more flexible
+        const specLines = moto.specs.split(/[;\n]/);
         specLines.forEach(line => {
-            if (!line.trim()) return;
-            const parts = line.split(':');
+            const trimmedLine = line.trim();
+            if (!trimmedLine) return;
+
+            const parts = trimmedLine.split(':');
             if (parts.length > 1) {
                 const item = document.createElement('div');
                 item.className = 'spec-item';
-                item.innerHTML = `<b>${parts[0].trim()}:</b> ${parts[1].trim()}`;
+                // Make the key bold, keep the rest as is
+                const key = parts.shift().trim();
+                const value = parts.join(':').trim();
+                item.innerHTML = `<b>${key}:</b> ${value}`;
                 specsContainer.appendChild(item);
             } else {
                 const item = document.createElement('div');
                 item.className = 'spec-item';
-                item.textContent = line.trim();
+                item.textContent = trimmedLine;
                 specsContainer.appendChild(item);
             }
         });
