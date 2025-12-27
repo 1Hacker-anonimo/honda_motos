@@ -1,5 +1,9 @@
 let siteData = null;
 
+function getData() {
+    return siteData;
+}
+
 // 1. UTILS & HELPERS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
