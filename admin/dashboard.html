@@ -278,16 +278,27 @@
     <script>
         // Secure Session Check
         (async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                window.location.href = '/admin/index.html';
-                return;
-            }
-            const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
-            if (profile?.role !== 'admin') {
-                await supabase.auth.signOut();
-                window.location.href = '/admin/index.html';
-            }
+            // Wait for window.supabase to be defined by supabase-config.js
+            const checkSupabase = setInterval(async () => {
+                if (window.supabase) {
+                    clearInterval(checkSupabase);
+                    try {
+                        const { data: { session } } = await window.supabase.auth.getSession();
+                        if (!session) {
+                            window.location.href = '/admin/index.html';
+                            return;
+                        }
+                        const { data: profile } = await window.supabase.from('profiles').select('role').eq('id', session.user.id).single();
+                        if (profile?.role !== 'admin') {
+                            await window.supabase.auth.signOut();
+                            window.location.href = '/admin/index.html';
+                        }
+                    } catch (err) {
+                        console.error("Security check failed:", err);
+                        window.location.href = '/admin/index.html';
+                    }
+                }
+            }, 50);
         })();
     </script>
     <script src="/admin/js/admin.js"></script>

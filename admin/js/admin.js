@@ -4,28 +4,38 @@ let currentMotoId = null;
 let currentGallery = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Initial UI Setup (Run this immediately so buttons work)
+    console.log("Admin Dashboard Loading...");
+
+    // 1. Initial UI Setup (RUN THIS FIRST - No dependencies)
     setupTabSwitching();
+
+    // 2. Wait for Supabase to be ready (Max 2 seconds)
+    let retryCount = 0;
+    while (!window.supabase && retryCount < 40) {
+        await new Promise(r => setTimeout(r, 50));
+        retryCount++;
+    }
 
     const supabase = getSupabase();
     if (!supabase) {
-        console.error("Supabase client not initialized via window.supabase");
+        console.error("Supabase client not initialized.");
+        alert("Erro técnico: O sistema de banco de dados não carregou. Tente atualizar a página.");
         return;
     }
 
     try {
-        // 2. Check Auth
+        // 3. Check Auth
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
             window.location.href = '/admin/index.html';
             return;
         }
 
-        // 3. Other Setup
+        // 4. Other Setup
         setupAdminActions();
         setupConsortiumActions();
 
-        // 4. Data Load
+        // 5. Data Load
         await refreshData();
     } catch (err) {
         console.error("Initialization error:", err);
